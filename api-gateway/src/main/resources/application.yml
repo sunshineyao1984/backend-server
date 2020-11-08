@@ -1,0 +1,50 @@
+server:
+  port: 21001
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        - id: member-service
+          uri: lb://member-service
+          predicates:
+            - Path=/member-service/**
+          filters:
+            - StripPrefix=1
+        - id: auth-service
+          uri: lb://auth-service
+          predicates:
+            - Path=/auth-service/**
+          filters:
+            - StripPrefix=1
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: 'http://localhost:21001/auth-service/rsa/publicKey'
+
+secure:
+  ignore:
+    urls:
+      - "/doc.html"
+      - "/swagger-resources/**"
+      - "/swagger/**"
+      - "/**/v2/api-docs"
+      - "/**/*.js"
+      - "/**/*.css"
+      - "/**/*.png"
+      - "/**/*.ico"
+      - "/webjars/springfox-swagger-ui/**"
+      - "/actuator/**"
+      - "/auth-service/oauth/token"
+      - "/auth-service/rsa/publicKey"
+      - "/auth-service/auth/registerOrLogin"
+      - "/member-service/member/getSmsCode"

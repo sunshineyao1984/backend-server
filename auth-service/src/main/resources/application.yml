@@ -1,0 +1,27 @@
+server:
+  port: 21081
+
+spring:
+  redis:
+    database: 0
+    host: 192.168.0.102
+    port: 6379
+    lettuce:
+      pool:
+        max-active: 8
+        max-wait: -1ms
+        max-idle: 8
+        min-idle: 0
+
+dubbo:
+  scan:
+    # dubbo 服务扫描基准包
+    base-packages: com.frog.backend.server.auth.service.api.impl
+  protocol:
+    id: dubbo
+    # dubbo 协议
+    name: dubbo
+    # dubbo 协议端口（ -1 表示自增端口，从 20880 开始）
+    port: 20881
+  cloud:
+    subscribed-services: member-service

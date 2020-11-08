@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <context id="mysql" defaultModelType="hierarchical" targetRuntime="MyBatis3Simple">
+
+        <property name="autoDelimitKeywords" value="false"/>
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+
+        <property name="javaFileEncoding" value="UTF-8"/>
+        <property name="javaFormatter" value="org.mybatis.generator.api.dom.DefaultJavaFormatter"/>
+        <property name="xmlFormatter" value="org.mybatis.generator.api.dom.DefaultXmlFormatter"/>
+
+        <plugin type="com.yaoxiangyang.generator.mybatis.plugin.LombokPlugin"></plugin>
+        <plugin type="com.yaoxiangyang.generator.mybatis.plugin.MapperPlugin">
+            <property name="mappers" value="com.frog.backend.components.mysql.component.mapper.BaseMapper"/>
+        </plugin>
+        <plugin type="com.yaoxiangyang.generator.mybatis.plugin.MapperAnnotationPlugin"></plugin>
+        <plugin type="com.yaoxiangyang.generator.mybatis.plugin.ServiceControllerPlugin">
+            <property name="topPackage" value="com.frog.backend.server.member.service"/>
+            <property name="serviceSubPackage" value=""/>
+            <property name="controllerSubPackage" value=""/>
+            <property name="apiProject" value="C:\Users\yaoxiangyang\IdeaProjects\server-backend\member-service-api\src\main\java"/>
+        </plugin>
+        
+        <commentGenerator type="com.yaoxiangyang.generator.mybatis.plugin.comment.MyCommentGenerator">
+            <property name="suppressAllComments" value="false" />
+            <property name="suppressDate" value="true" />
+            <property name="addRemarkComments" value="true" />
+        </commentGenerator>
+        
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://192.168.0.102:3306/server_member?useUnicode=true&amp;autoReconnect=true&amp;autoReconnectForPools=true"
+                        userId="root"
+                        password="123456"
+                        >
+
+        </jdbcConnection>
+
+        <javaTypeResolver type="com.yaoxiangyang.generator.mybatis.plugin.resolver.MyJavaTypeResolver">
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <javaModelGenerator targetPackage="com.frog.backend.server.member.service.pojo.domain" targetProject="src\main\java">
+            <property name="constructorBased" value="false"/>
+            <property name="enableSubPackages" value="true"/>
+            <property name="immutable" value="false"/>
+            <property name="rootClass" value="com.frog.backend.components.mysql.component.pojo.domain.BaseDomain"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <sqlMapGenerator targetPackage="mapper" targetProject="src\main\resources">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <javaClientGenerator targetPackage="com.frog.backend.server.member.service.mapper" type="XMLMAPPER" targetProject="src\main\java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <table tableName="%"
+               enableInsert="false"
+               enableSelectByPrimaryKey="false"
+               enableUpdateByPrimaryKey="false"
+               enableDeleteByPrimaryKey="false" >
+
+            <property name="constructorBased" value="false"/>
+            <property name="ignoreQualifiersAtRuntime" value="false"/>
+            <property name="immutable" value="false"/>
+            <property name="modelOnly" value="false"/>
+            <property name="useActualColumnNames" value="false"/>
+
+        </table>
+    </context>
+</generatorConfiguration>
