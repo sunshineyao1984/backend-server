@@ -113,6 +113,11 @@
                 <version>${com.frog.backend.server.version}</version>
             </dependency>
             <dependency>
+                <groupId>com.frog.backend.server</groupId>
+                <artifactId>system-service-api</artifactId>
+                <version>${com.frog.backend.server.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>com.frog.backend.components</groupId>
                 <artifactId>commons-component</artifactId>
                 <version>${com.frog.backend.components.version}</version>
@@ -125,6 +130,11 @@
             <dependency>
                 <groupId>com.frog.backend.components</groupId>
                 <artifactId>mysql-component</artifactId>
+                <version>${com.frog.backend.components.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.frog.backend.components</groupId>
+                <artifactId>sqlserver-component</artifactId>
                 <version>${com.frog.backend.components.version}</version>
             </dependency>
         </dependencies>

@@ -9,17 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>system-service-api</artifactId>
+    <artifactId>system-service</artifactId>
 
-    <dependencies>
-        <dependency>
-            <groupId>com.frog.backend.server</groupId>
-            <artifactId>service-base</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.frog.backend.components</groupId>
-            <artifactId>sqlserver-component</artifactId>
-        </dependency>
-    </dependencies>
 
 </project>
