@@ -1,0 +1,19 @@
+server:
+  port: 21082
+spring:
+  datasource:
+    url: jdbc:sqlserver://127.0.0.1:1433;DatabaseName=wg
+    username: sa
+    password: 123456
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+
+dubbo:
+  scan:
+    # dubbo 服务扫描基准包
+    base-packages: com.frog.backend.server.system.service.api.impl
+  protocol:
+    id: dubbo
+    # dubbo 协议
+    name: dubbo
+    # dubbo 协议端口（ -1 表示自增端口，从 20880 开始）
+    port: 20882
