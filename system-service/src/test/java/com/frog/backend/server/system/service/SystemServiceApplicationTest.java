@@ -25,10 +25,10 @@ public class SystemServiceApplicationTest {
     @Test
     public void test(){
         UserInfo userInfo = new UserInfo();
-        userInfo.setUserName("SunYue");
-        int count = userInfoService.insert(userInfo);
+        userInfo.setUserName("ZhuFangYu");
+        UserInfo rs = userInfoService.selectById("942eccb750534701a821a7b0efea6ac5");
         log.info("userInfo={}",userInfo);
-        log.info("count={}",count);
+        log.info("count={}",rs);
     }
 
 }

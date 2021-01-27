@@ -23,7 +23,7 @@ import tk.mybatis.mapper.code.ORDER;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "user_info")
-public class UserInfo {
+public class UserInfo extends BaseDomain {
     /**
      */
     @Id
