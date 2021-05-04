@@ -1,13 +1,10 @@
 package com.frog.backend.server.system.service;
 
-import com.frog.backend.server.system.service.pojo.domain.UserInfo;
 import com.frog.backend.server.system.service.service.UserInfoService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.time.LocalDateTime;
 
 /**
  * Description
