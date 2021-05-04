@@ -17,6 +17,10 @@ dubbo:
     name: dubbo
     # dubbo 协议端口（ -1 表示自增端口，从 20880 开始）
     port: 20882
+  cloud:
+    subscribed-services: auth-service
+  consumer:
+    check: false
 
 pagehelper:
   helper-dialect: sqlserver2012

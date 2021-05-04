@@ -25,3 +25,5 @@ dubbo:
     port: 20881
   cloud:
     subscribed-services: member-service,system-service
+  consumer:
+    check: false

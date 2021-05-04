@@ -30,3 +30,5 @@ dubbo:
     port: 20880
   cloud:
     subscribed-services: auth-service
+  consumer:
+    check: false
