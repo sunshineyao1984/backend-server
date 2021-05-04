@@ -12,7 +12,6 @@ import com.frog.backend.server.service.core.pojo.oauth.Oauth2TokenDto;
 import com.frog.backend.server.service.core.pojo.vo.Result;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.endpoint.TokenEndpoint;
 import org.springframework.stereotype.Service;
@@ -37,8 +36,8 @@ public class AuthServiceImpl implements AuthService {
     @DubboReference
     private MemberService memberService;
 
-    @Autowired
-    private ValueOperations<String, Object> valueOperations;
+//    @Autowired
+//    private ValueOperations<String, Object> valueOperations;
 
     @Override
     public Result<Oauth2TokenDto> registerOrLogin(Principal principal, RegisterOrLoginParam registerOrLoginParam) throws HttpRequestMethodNotSupportedException {
@@ -51,7 +50,7 @@ public class AuthServiceImpl implements AuthService {
             }
             //注册成功后将注册信息存入Redis
             String key = RedisConstants.RedisKeyPrefix.AUTH + RedisConstants.RedisKeyInfix.REGISTER_INFO + registerOrLoginParam.getUsername();
-            valueOperations.set(key, result.getData());
+//            valueOperations.set(key, result.getData());
         }
 
         Map<String, String> oauthParams = new HashMap<>(4);

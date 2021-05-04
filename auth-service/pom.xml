@@ -72,10 +72,10 @@
             <artifactId>nimbus-jose-jwt</artifactId>
         </dependency>
 
-        <dependency>
+<!--        <dependency>
             <groupId>com.frog.backend.components</groupId>
             <artifactId>redis-component</artifactId>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>

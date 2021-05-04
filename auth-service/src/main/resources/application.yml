@@ -24,4 +24,4 @@ dubbo:
     # dubbo 协议端口（ -1 表示自增端口，从 20880 开始）
     port: 20881
   cloud:
-    subscribed-services: member-service
+    subscribed-services: member-service,system-service

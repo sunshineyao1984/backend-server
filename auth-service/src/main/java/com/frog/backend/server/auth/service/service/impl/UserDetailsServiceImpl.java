@@ -17,8 +17,6 @@ import com.frog.backend.server.system.service.api.pojo.vo.SysUserVo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.connection.RedisConnection;
-import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.security.authentication.AccountExpiredException;
 import org.springframework.security.authentication.CredentialsExpiredException;
 import org.springframework.security.authentication.DisabledException;
@@ -47,11 +45,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private ValueOperations<String, Object> valueOperations;
-
-    @Autowired
-    private RedisConnection redisConnection;
+//    @Autowired
+//    private ValueOperations<String, Object> valueOperations;
+//
+//    @Autowired
+//    private RedisConnection redisConnection;
 
     @DubboReference
     private MemberService memberService;
@@ -80,27 +78,27 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             MemberBasicVo memberBasicVo = null;
             if (RegisterOrLoginType.REGISTER.toString().equals(type)) {
                 //注册
-                String key = RedisConstants.RedisKeyPrefix.AUTH + RedisConstants.RedisKeyInfix.REGISTER_INFO + username;
-                memberBasicVo = (MemberBasicVo) valueOperations.get(key);
-                Long count = redisConnection.del(key.getBytes());
-                log.info("redisConnection.del(key.getBytes()),key={},count={}", key, count);
-            } else {
-                //登录
-                Result<MemberBasicVo> result = memberService.getMemberInfoByMobile(username);
-                if (!ResultUtils.isSuccessResult(result)) {
-                    throw new ServiceException(result.getCode(), result.getMsg());
-                }
-                memberBasicVo = result.getData();
-                log.info("memberBasicVo======={}", memberBasicVo);
-            }
-            userDto.setId(memberBasicVo.getMemberId());
-            userDto.setUsername(memberBasicVo.getMobile());
-            userDto.setPassword(passwordEncoder.encode(memberBasicVo.getPassword()));
-            if(RegisterOrLoginType.LOGIN_BY_SMS_CODE.toString().equals(type)){
-                String key = RedisConstants.RedisKeyPrefix.AUTH + RedisConstants.RedisKeyInfix.SMS_CODE +
-                        SmsCodeType.LOGIN + ":" + memberBasicVo.getMobile();
-                String smsCode = (String) valueOperations.get(key);
-                userDto.setPassword(passwordEncoder.encode(smsCode));
+//                String key = RedisConstants.RedisKeyPrefix.AUTH + RedisConstants.RedisKeyInfix.REGISTER_INFO + username;
+//                memberBasicVo = (MemberBasicVo) valueOperations.get(key);
+//                Long count = redisConnection.del(key.getBytes());
+//                log.info("redisConnection.del(key.getBytes()),key={},count={}", key, count);
+//            } else {
+//                //登录
+//                Result<MemberBasicVo> result = memberService.getMemberInfoByMobile(username);
+//                if (!ResultUtils.isSuccessResult(result)) {
+//                    throw new ServiceException(result.getCode(), result.getMsg());
+//                }
+//                memberBasicVo = result.getData();
+//                log.info("memberBasicVo======={}", memberBasicVo);
+//            }
+//            userDto.setId(memberBasicVo.getMemberId());
+//            userDto.setUsername(memberBasicVo.getMobile());
+//            userDto.setPassword(passwordEncoder.encode(memberBasicVo.getPassword()));
+//            if(RegisterOrLoginType.LOGIN_BY_SMS_CODE.toString().equals(type)){
+//                String key = RedisConstants.RedisKeyPrefix.AUTH + RedisConstants.RedisKeyInfix.SMS_CODE +
+//                        SmsCodeType.LOGIN + ":" + memberBasicVo.getMobile();
+////                String smsCode = (String) valueOperations.get(key);
+//                userDto.setPassword(passwordEncoder.encode(smsCode));
             }
         }
         userDto.setStatus(1);
