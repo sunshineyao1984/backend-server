@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.redis.core.ValueOperations;
+//import org.springframework.data.redis.core.ValueOperations;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -24,8 +24,8 @@ public class MemberServiceApplicationTest {
     @Autowired
     private MemberBasicService memberBasicService;
 
-    @Autowired
-    private ValueOperations<String,Object> valueOperations;
+//    @Autowired
+//    private ValueOperations<String,Object> valueOperations;
 
     @Test
     public void test(){
@@ -41,8 +41,8 @@ public class MemberServiceApplicationTest {
 
     @Test
     public void testRedis(){
-        valueOperations.set("frog","hello");
-        String va = (String) valueOperations.get("frog");
-        log.info("va={}",va);
+//        valueOperations.set("frog","hello");
+//        String va = (String) valueOperations.get("frog");
+//        log.info("va={}",va);
     }
 }

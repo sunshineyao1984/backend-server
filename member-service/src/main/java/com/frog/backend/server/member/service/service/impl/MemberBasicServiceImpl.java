@@ -16,7 +16,6 @@ import com.frog.backend.server.service.core.pojo.vo.Result;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 import lombok.extern.slf4j.Slf4j;
 
@@ -37,8 +36,8 @@ public class MemberBasicServiceImpl extends BaseServiceImpl<MemberBasic, Long> i
     @Autowired
     private MemberBasicMapper memberBasicMapper;
 
-    @Autowired
-    private ValueOperations<String, Object> valueOperations;
+//    @Autowired
+//    private ValueOperations<String, Object> valueOperations;
 
     @Override
     protected BaseMapper<MemberBasic> getMapper() {
@@ -74,7 +73,7 @@ public class MemberBasicServiceImpl extends BaseServiceImpl<MemberBasic, Long> i
         //生成4位随机数字字符串
         String rd = RandomUtils.randomNumbers(4);
         long expire = RedisConstants.RedisExpire.SMS_CODE;
-        valueOperations.set(key, rd, expire, TimeUnit.SECONDS);
+//        valueOperations.set(key, rd, expire, TimeUnit.SECONDS);
         Map<String, String> map = new HashMap<>(1);
         if (smsCodeParam.getSmsCodeType().equals(SmsCodeType.REGISTER)) {
             map.put("smsMsg", "您的注册验证码是：" + rd);
@@ -111,7 +110,7 @@ public class MemberBasicServiceImpl extends BaseServiceImpl<MemberBasic, Long> i
     private String getSmsCodeFromRedis(String mobile, Integer smsCodeType) {
         String key = RedisConstants.RedisKeyPrefix.AUTH + RedisConstants.RedisKeyInfix.SMS_CODE +
                 smsCodeType + ":" + mobile;
-        String smsCode = (String) valueOperations.get(key);
+        String smsCode = "";//(String) valueOperations.get(key);
         return smsCode;
     }
 }
