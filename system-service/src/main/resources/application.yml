@@ -23,7 +23,7 @@ dubbo:
     check: false
 
 pagehelper:
-  helper-dialect: sqlserver2012
+  helper-dialect: mysql
   reasonable: true
   support-methods-arguments: true
   params: count=countsql
