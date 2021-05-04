@@ -1,11 +1,12 @@
 package com.frog.backend.server.member.service.pojo.domain;
 
-import com.frog.backend.components.mysql.component.pojo.domain.BaseDomain;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import javax.persistence.*;
+
+import com.frog.backend.server.service.base.pojo.domain.BaseDomain;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,7 +22,7 @@ import tk.mybatis.mapper.annotation.KeySql;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "member_basic")
-public class MemberBasic extends BaseDomain {
+public class MemberBasic {
     /**
      * 会员ID
      */

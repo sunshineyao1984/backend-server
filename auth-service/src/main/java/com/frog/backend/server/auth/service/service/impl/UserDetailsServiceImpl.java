@@ -12,6 +12,8 @@ import com.frog.backend.server.service.core.constant.AuthConstant;
 import com.frog.backend.server.service.core.exception.ServiceException;
 import com.frog.backend.server.service.core.pojo.oauth.UserDto;
 import com.frog.backend.server.service.core.pojo.vo.Result;
+import com.frog.backend.server.system.service.api.UserService;
+import com.frog.backend.server.system.service.api.pojo.vo.SysUserVo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,16 +56,28 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @DubboReference
     private MemberService memberService;
 
+    @DubboReference
+    private UserService userService;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         String clientId = request.getParameter("client_id");
         UserDto userDto = new UserDto();
-        MemberBasicVo memberBasicVo = null;
+
         String type = request.getParameter("type");
         if (AuthConstant.ADMIN_CLIENT_ID.equals(clientId)) {
-            //todo
-            memberBasicVo = new MemberBasicVo();
+            //登录
+            SysUserVo sysUserVo = null;
+            Result<SysUserVo> result = userService.getUserInfoByUsername(username);
+            if (!ResultUtils.isSuccessResult(result)) {
+                throw new ServiceException(result.getCode(), result.getMsg());
+            }
+            sysUserVo = result.getData();
+            userDto.setId(sysUserVo.getUserId());
+            userDto.setUsername(sysUserVo.getUserName());
+            userDto.setPassword(sysUserVo.getPassword());
         } else if (AuthConstant.MEMBER_CLIENT_ID.equals(clientId)) {
+            MemberBasicVo memberBasicVo = null;
             if (RegisterOrLoginType.REGISTER.toString().equals(type)) {
                 //注册
                 String key = RedisConstants.RedisKeyPrefix.AUTH + RedisConstants.RedisKeyInfix.REGISTER_INFO + username;
@@ -79,15 +93,15 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 memberBasicVo = result.getData();
                 log.info("memberBasicVo======={}", memberBasicVo);
             }
-        }
-        userDto.setId(memberBasicVo.getMemberId());
-        userDto.setUsername(memberBasicVo.getMobile());
-        userDto.setPassword(passwordEncoder.encode(memberBasicVo.getPassword()));
-        if(RegisterOrLoginType.LOGIN_BY_SMS_CODE.toString().equals(type)){
-            String key = RedisConstants.RedisKeyPrefix.AUTH + RedisConstants.RedisKeyInfix.SMS_CODE +
-                    SmsCodeType.LOGIN + ":" + memberBasicVo.getMobile();
-            String smsCode = (String) valueOperations.get(key);
-            userDto.setPassword(passwordEncoder.encode(smsCode));
+            userDto.setId(memberBasicVo.getMemberId());
+            userDto.setUsername(memberBasicVo.getMobile());
+            userDto.setPassword(passwordEncoder.encode(memberBasicVo.getPassword()));
+            if(RegisterOrLoginType.LOGIN_BY_SMS_CODE.toString().equals(type)){
+                String key = RedisConstants.RedisKeyPrefix.AUTH + RedisConstants.RedisKeyInfix.SMS_CODE +
+                        SmsCodeType.LOGIN + ":" + memberBasicVo.getMobile();
+                String smsCode = (String) valueOperations.get(key);
+                userDto.setPassword(passwordEncoder.encode(smsCode));
+            }
         }
         userDto.setStatus(1);
         userDto.setClientId(clientId);

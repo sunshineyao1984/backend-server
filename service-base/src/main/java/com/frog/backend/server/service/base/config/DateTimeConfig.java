@@ -40,7 +40,7 @@ public class DateTimeConfig {
         return new Converter<String, LocalDate>() {
             @Override
             public LocalDate convert(String s) {
-                if (s.contains(TimeUtils.STRING_MARK)) {
+                if (s.contains(TimeUtils.STRING_DATE_MARK)) {
                     return TimeUtils.stringToLocalDate(s, TimeUtils.TimeFormat.SHORT_DATE_PATTERN_LINE);
                 }
                 return TimeUtils.millisToLocalDate(Long.parseLong(s));
@@ -58,7 +58,7 @@ public class DateTimeConfig {
         return new Converter<String, LocalDateTime>() {
             @Override
             public LocalDateTime convert(String s) {
-                if (s.contains(TimeUtils.STRING_MARK)) {
+                if (s.contains(TimeUtils.STRING_TIME_MARK)) {
                     return TimeUtils.stringToLocalDateTime(s);
                 }
                 return TimeUtils.millisToLocalDateTime(Long.parseLong(s));

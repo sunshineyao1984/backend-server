@@ -35,6 +35,10 @@
             </exclusions>
         </dependency>
         <dependency>
+            <groupId>com.frog.backend.components</groupId>
+            <artifactId>mysql-component</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
@@ -53,13 +57,18 @@
                 </configuration>
                 <dependencies>
                     <dependency>
+                        <groupId>mysql</groupId>
+                        <artifactId>mysql-connector-java</artifactId>
+                        <version>5.1.47</version>
+                    </dependency>
+<!--                    <dependency>
                         <groupId>com.microsoft.sqlserver</groupId>
                         <artifactId>mssql-jdbc</artifactId>
                         <version>8.4.1.jre8</version>
-                    </dependency>
+                    </dependency>-->
                     <dependency>
-                        <groupId>com.yaoxiangyang.generator</groupId>
-                        <artifactId>mybatis-plugin</artifactId>
+                        <groupId>com.frog.generator</groupId>
+                        <artifactId>backend-code-generator</artifactId>
                         <version>1.0.0-SNAPSHOT</version>
                     </dependency>
                 </dependencies>

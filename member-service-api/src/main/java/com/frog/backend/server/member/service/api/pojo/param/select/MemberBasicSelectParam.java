@@ -1,6 +1,6 @@
 package com.frog.backend.server.member.service.api.pojo.param.select;
 
-import com.frog.backend.components.mysql.component.pojo.param.PageParam;
+import com.frog.backend.server.service.base.pojo.param.PageParam;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 

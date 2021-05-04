@@ -1,7 +1,7 @@
 package com.frog.backend.server.system.service.controller;
 
-import com.frog.backend.server.system.service.pojo.domain.UserInfo;
-import com.frog.backend.server.system.service.service.UserInfoService;
+import com.frog.backend.server.system.service.pojo.domain.SysUser;
+import com.frog.backend.server.system.service.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,16 +10,16 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Description UserInfoController
+ * Description SysUserController
  *
  * @author yxy
- * @date 2021/02/02
+ * @date 2021/05/04
  */
 @Slf4j
 @RestController
-public class UserInfoController {
+public class SysUserController {
 
 	@Autowired
-	private UserInfoService userInfoService;
+	private SysUserService sysUserService;
 
 }
