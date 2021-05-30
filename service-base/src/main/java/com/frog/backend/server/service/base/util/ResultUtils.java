@@ -5,6 +5,9 @@ import com.frog.backend.server.service.core.enums.CodeEnum;
 import com.frog.backend.server.service.core.pojo.vo.BaseResult;
 import com.frog.backend.server.service.core.pojo.vo.Result;
 import com.github.pagehelper.PageInfo;
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.ArrayList;
 
 /**
  * Description 返回数据工具类
@@ -49,14 +52,30 @@ public class ResultUtils {
     /**
      * 返回失败基本模型
      *
+     * @return
+     */
+    public static BaseResult returnBaseResultError() {
+        return new BaseResult(CodeEnum.ERROR);
+    }
+
+    /**
+     * 返回失败基本模型,指定错误枚举
+     *
      * @param codeEnum
      * @return
      */
     public static BaseResult returnBaseResultError(CodeEnum codeEnum) {
-        if (codeEnum == null) {
-            return new BaseResult(CodeEnum.ERROR);
-        }
-        return new BaseResult(codeEnum);
+        return returnBaseResultDynamic(codeEnum, null);
+    }
+
+    /**
+     * 返回失败基本模型,指定错误枚举及错误msg
+     *
+     * @param codeEnum
+     * @return
+     */
+    public static BaseResult returnBaseResultError(CodeEnum codeEnum, String msg) {
+        return returnBaseResultDynamic(codeEnum, msg);
     }
 
     /**
@@ -70,7 +89,10 @@ public class ResultUtils {
         if (codeEnum == null) {
             return new BaseResult(CodeEnum.ERROR);
         }
-        return new BaseResult(CodeEnum.DYNAMIC_CODE.setDynamic(codeEnum, msg));
+        if (StringUtils.isBlank(msg)) {
+            return new BaseResult(codeEnum);
+        }
+        return new BaseResult(codeEnum.getCode(), msg);
     }
 
     /**
@@ -84,7 +106,7 @@ public class ResultUtils {
         if (code == null) {
             return new BaseResult(CodeEnum.ERROR);
         }
-        return new BaseResult(CodeEnum.DYNAMIC_CODE.setDynamicCode(code, msg));
+        return new BaseResult(code, msg);
     }
 
     /**
@@ -96,6 +118,18 @@ public class ResultUtils {
      */
     public static <T> Result<T> returnResultSuccess(T data) {
         return new Result<>(CodeEnum.SUCCESS, data);
+    }
+
+    /**
+     * 返回成功标准模型, 自定义msg
+     *
+     * @param msg
+     * @param data
+     * @param <T>
+     * @return
+     */
+    public static <T> Result<T> returnResultSuccess(String msg, T data) {
+        return new Result<>(CodeEnum.SUCCESS.getCode(), msg, data);
     }
 
     /**
@@ -115,6 +149,17 @@ public class ResultUtils {
     /**
      * 返回失败标准模型
      *
+     * @param data
+     * @param <T>
+     * @return
+     */
+    public static <T> Result<T> returnResultError(T data) {
+        return new Result<>(CodeEnum.ERROR, data);
+    }
+
+    /**
+     * 返回失败标准模型,自定义枚举
+     *
      * @param codeEnum
      * @param data
      * @param <T>
@@ -125,6 +170,31 @@ public class ResultUtils {
             return new Result<>(CodeEnum.ERROR, data);
         }
         return new Result<>(codeEnum, data);
+    }
+
+    /**
+     * 返回失败标准模型,自定义msg
+     *
+     * @param msg
+     * @param data
+     * @param <T>
+     * @return
+     */
+    public static <T> Result<T> returnResultError(String msg, T data) {
+        return new Result<>(CodeEnum.ERROR.getCode(), msg, data);
+    }
+
+    /**
+     * 返回失败标准模型,自定义枚举和msg
+     *
+     * @param codeEnum
+     * @param msg
+     * @param data
+     * @param <T>
+     * @return
+     */
+    public static <T> Result<T> returnResultError(CodeEnum codeEnum, String msg, T data) {
+        return returnResultDynamic(codeEnum, msg, data);
     }
 
     /**
@@ -140,7 +210,10 @@ public class ResultUtils {
         if (codeEnum == null) {
             return new Result<>(CodeEnum.ERROR, data);
         }
-        return new Result<>(CodeEnum.DYNAMIC_CODE.setDynamic(codeEnum, msg), data);
+        if (StringUtils.isBlank(msg)) {
+            return new Result<>(codeEnum, data);
+        }
+        return new Result<>(codeEnum.getCode(), msg, data);
     }
 
     /**
@@ -156,7 +229,7 @@ public class ResultUtils {
         if (code == null) {
             return new Result<>(CodeEnum.ERROR, data);
         }
-        return new Result<>(CodeEnum.DYNAMIC_CODE.setDynamicCode(code, msg), data);
+        return new Result<>(code, msg, data);
     }
 
     /**
@@ -168,7 +241,7 @@ public class ResultUtils {
      * @return
      */
     public static <T> Result<T> returnResultFromBaseResult(BaseResult baseResult, T data) {
-        return new Result<>(CodeEnum.DYNAMIC_CODE.setDynamicCode(baseResult.getCode(), baseResult.getMsg()), data);
+        return new Result<>(baseResult.getCode(), baseResult.getMsg(), data);
     }
 
     /**
@@ -223,6 +296,13 @@ public class ResultUtils {
      */
     private static <T> PageData<T> getPageData(PageInfo<T> pageInfo) {
         PageData<T> pageData = new PageData<>();
+        if (pageInfo == null) {
+            pageData.setTotal(0L);
+            pageData.setList(new ArrayList<>());
+            pageData.setPages(0);
+            pageData.setPageNum(0);
+            pageData.setPageSize(0);
+        }
         pageData.setTotal(pageInfo.getTotal());
         pageData.setList(pageInfo.getList());
         pageData.setPages(pageInfo.getPages());
