@@ -1,6 +1,5 @@
 package com.frog.backend.server.service.core.enums;
 
-import com.frog.backend.server.service.core.exception.ServiceException;
 
 /**
  * Description 响应码枚举
