@@ -35,4 +35,9 @@ public class BaseResult implements Serializable {
         this.code = codeEnum.getCode();
         this.msg = codeEnum.getMsg();
     }
+
+    public BaseResult(Integer code, String msg){
+        this.code = code;
+        this.msg = msg;
+    }
 }
