@@ -24,4 +24,9 @@ public class Result<T> extends BaseResult {
         super(codeEnum);
         this.data = data;
     }
+
+    public Result(Integer code, String msg, T data) {
+        super(code, msg);
+        this.data = data;
+    }
 }
