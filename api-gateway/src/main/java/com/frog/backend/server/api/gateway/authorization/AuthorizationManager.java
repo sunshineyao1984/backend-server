@@ -1,5 +1,6 @@
 package com.frog.backend.server.api.gateway.authorization;
 
+import cn.hutool.core.convert.Convert;
 import cn.hutool.json.JSONUtil;
 import com.frog.backend.server.api.gateway.config.IgnoreUrlsConfig;
 import com.frog.backend.server.service.core.constant.AuthConstant;
@@ -23,7 +24,9 @@ import reactor.core.publisher.Mono;
 import java.net.URI;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -35,6 +38,9 @@ import java.util.stream.Collectors;
 @Slf4j
 @Component
 public class AuthorizationManager implements ReactiveAuthorizationManager<AuthorizationContext> {
+
+//    @Autowired
+//    private RedisTemplate<String, Object> redisTemplate;
 
     @Autowired
     private IgnoreUrlsConfig ignoreUrlsConfig;
@@ -79,8 +85,18 @@ public class AuthorizationManager implements ReactiveAuthorizationManager<Author
         if (!pathMatcher.match(AuthConstant.ADMIN_URL_PATTERN, uri.getPath())) {
             return Mono.just(new AuthorizationDecision(true));
         }
+        //管理端路径需校验权限
+//        Map<Object, Object> resourceRolesMap = redisTemplate.opsForHash().entries(AuthConstant.RESOURCE_ROLES_MAP_KEY);
+//        Iterator<Object> iterator = resourceRolesMap.keySet().iterator();
         List<String> authorities = new ArrayList<>();
+//        while (iterator.hasNext()) {
+//            String pattern = (String) iterator.next();
+//            if (pathMatcher.match(pattern, uri.getPath())) {
+//                authorities.addAll(Convert.toList(String.class, resourceRolesMap.get(pattern)));
+//            }
+//        }
         authorities = authorities.stream().map(i -> i = AuthConstant.AUTHORITY_PREFIX + i).collect(Collectors.toList());
+        //认证通过且角色匹配的用户可访问当前路径
         return mono.filter(Authentication::isAuthenticated)
                 .flatMapIterable(Authentication::getAuthorities)
                 .map(GrantedAuthority::getAuthority)
